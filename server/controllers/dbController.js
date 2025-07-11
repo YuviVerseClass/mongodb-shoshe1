@@ -26,7 +26,15 @@ async function toggleTask(req, res) {
 }
 
 async function deleteTask(req, res) {
-  // TODO
+  try{
+    const delete_task = await Task.findByIdAndDelete(req.params.id);
+    if (!delete_task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.status(200).json({ message: 'Task deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 module.exports = {
